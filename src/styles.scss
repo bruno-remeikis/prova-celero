@@ -1,1 +1,39 @@
-/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Libre+Franklin:ital,wght@0,100..900;1,100..900&display=swap');
+
+//
+* {
+  margin: 0;
+}
+
+:root {
+  --primary-color-500: #ec1d24;
+  --primary-color: #ec1d24;
+  --bg-color: #151515;
+}
+
+body {
+  font-family: "Libre Franklin", sans-serif;
+  font-optical-sizing: auto;
+  //font-weight: <weight>;
+  //font-style: normal;
+}
+
+// --- SCROLLBAR ---
+
+// Width
+::-webkit-scrollbar {
+  width: 10px;
+}
+// Track
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+// Handle
+::-webkit-scrollbar-thumb {
+  // background: #888;
+  background-color: var(--primary-color);
+}
+// Handle on hover
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
