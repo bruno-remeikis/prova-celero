@@ -1,22 +1,51 @@
-<main>
-  <h2>SELEÇÃO</h2>
+<div class="bg-image"></div>
 
+<main>
   <div class="selection-screen">
+    <!-- <h2>SELEÇÃO</h2> -->
 
     <div class="selection-section">
-      <div *ngFor="let player of [0, 1]" class="character-selection">
-        <div class="selected-character">
-          <img [src]="getImgUrl(selectedCharacter[player], imgType.min)" [alt]="selectedCharacter[player] ? selectedCharacter[player].name : ''">
-        </div>
+      <app-character-selection
+        [player]="0"
+        [characters]="characters[0]"
+      ></app-character-selection>
 
-        <!-- Duas janelas (para players 0 e 1) para seleção de heróis -->
-        <div class="characters">
-          <div *ngFor="let c of characters" class="character {{ selectedCharacter[player] && c.id === selectedCharacter[player].id ? 'selected' : '' }}" (click)="selectCharacter(c, player)">
-            <img [src]="getImgUrl(c, imgType.min)" [alt]="c.name">
-            <!-- <span>{{ c.name }}</span> -->
-          </div>
+      <div class="middle">
+        <div>
+          <span class="versus">VS</span>
+        </div>
+        <div>
+          <button>Lutar!</button>
         </div>
       </div>
+
+      <app-character-selection
+        [player]="1"
+        [characters]="characters[1]"
+      ></app-character-selection>
+
+      <!--
+      <div *ngFor="let player of [0, 1]" class="character-selection">
+
+        <div class="selected-character">
+          <div *ngIf="selectedCharacter[player]" class="figure">
+            <div class="name">{{ selectedCharacter[player].name }}</div>
+            <img [src]="getImgUrl(selectedCharacter[player], 'standard_xlarge')" [alt]="selectedCharacter[player] ? selectedCharacter[player].name : ''">
+          </div>
+        </div>
+
+        <input (keyup)="filterCharacters($event, player)">
+
+        Duas janelas (para players 0 e 1) para seleção de heróis
+        <div class="characters">
+          <div *ngFor="let c of characters[player]" class="character {{ selectedCharacter[player] && c.id === selectedCharacter[player].id ? 'selected' : '' }}" (click)="selectCharacter(c, player)">
+            <img [src]="getImgUrl(c, 'standard_medium')" [alt]="c.name">
+            <span class="name">{{ c.name }}</span>
+          </div>
+        </div>
+
+      </div>
+      -->
 
     </div>
 

@@ -1,32 +1,33 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { AppService } from './app.service';
-import { HttpClient } from '@angular/common/http';
-import { NgFor } from '@angular/common';
+import { MarvelService } from './services/marvel.service';
+import { NgFor, NgIf } from '@angular/common';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
-
-type Character = any;
+import { CharacterSelectionComponent } from './components/character-selection/character-selection.component';
+import { Character } from './types/Character';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, NgFor, InfiniteScrollModule],
+  imports: [
+    RouterOutlet,
+    NgIf,
+    NgFor,
+    InfiniteScrollModule,
+    CharacterSelectionComponent
+  ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
 export class AppComponent implements OnInit
 {
-  imgType = {
-    min: 'standard_large'
-  }
-
-  characters: Character[] = [];
+  characters: Character[][] = [[], []];
   offset = 0;
 
   selectedCharacter: (null | Character)[] = [null, null];
 
   constructor(
-    private appService: AppService
+    private appService: MarvelService
   ){
     this.loadCharacters();
   }
@@ -35,19 +36,15 @@ export class AppComponent implements OnInit
 
   }
 
-  loadCharacters() {
-    this.appService.getTeste(this.offset).subscribe(res => {
+  loadCharacters(characterName?: string, player?: number) {
+    this.appService.getCharacters(this.offset, characterName).subscribe(res => {
       console.log(res);
-      this.characters = res.data.results.filter((r: any) => !r.thumbnail.path.endsWith('image_not_available'));
+      const results = res.data.results.filter((r: any) => !r.thumbnail.path.endsWith('image_not_available'));
+
+      if(player)
+        this.characters[player] = results;
+      else
+        this.characters = [results, results]
     })
-  }
-
-  selectCharacter(character: Character, player: number) {
-    this.selectedCharacter[player] = character;
-    console.log(this.selectedCharacter);
-  }
-
-  getImgUrl(c: Character, imgType: string) {
-    return c !== null ? c.thumbnail.path + '/' + imgType + '.' + c.thumbnail.extension : '';
   }
 }

@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class AppService
+export class MarvelService
 {
   private apiUrl = 'https://gateway.marvel.com/v1/public';
 
@@ -15,13 +15,15 @@ export class AppService
 
   constructor(private http: HttpClient) { }
 
-  getTeste(offset: number): Observable<any> {
+  getCharacters(offset: number, characterName?: string): Observable<any> {
     const url = `${this.apiUrl}/characters` +
       `?apikey=${this.apikey}` +
       `&ts=${this.ts}` +
       `&hash=${this.hash}` +
-      `&limit=30` /*+
-      `&offset=${offset}`;*/
+      `&limit=40` + 
+      //`&offset=${offset}`;
+      (characterName ? `&nameStartsWith=${characterName}` : '')
+    ;
 
     return this.http.get/*<any[]>*/(url);
   }

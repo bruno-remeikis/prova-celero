@@ -1,0 +1,16 @@
+<div class="selected-character">
+  <div *ngIf="selectedCharacter" class="figure">
+    <img [src]="getImgUrl(selectedCharacter, 'standard_xlarge')" [alt]="selectedCharacter ? selectedCharacter.name : ''">
+    <div class="name">{{ selectedCharacter.name }}</div>
+  </div>
+</div>
+
+<input (keyup)="filterCharacters($event)">
+
+<!-- Duas janelas (para players 0 e 1) para seleção de heróis -->
+<div class="characters">
+  <div *ngFor="let c of characters" class="character {{ selectedCharacter && c.id === selectedCharacter.id ? 'selected' : '' }}" (click)="selectCharacter(c)">
+    <img [src]="getImgUrl(c, 'standard_medium')" [alt]="c.name">
+    <span class="name">{{ c.name }}</span>
+  </div>
+</div>

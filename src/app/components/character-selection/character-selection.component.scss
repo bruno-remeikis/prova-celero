@@ -1,0 +1,200 @@
+$chars-fig-size: 100px;
+$chars-fig-border: 0.1rem;
+$chars-padding: 0.1rem;
+$chars-box-size: calc($chars-fig-size + $chars-padding * 2 + $chars-fig-border * 2);
+
+$selected-char-fig-size: 200px;
+
+:host {
+    display: flex;
+    flex-direction: column;
+
+    // Player 1 (red side)
+    &:first-child {
+      .characters {
+        direction: rtl;
+
+        .character {
+          img {
+            border: $chars-fig-border solid var(--primary-color-700);
+          }
+        }
+      }
+    }
+
+    // Player 1 (blue side)
+    &:last-child {
+      .characters {
+        .character {
+          img {
+            border: $chars-fig-border solid var(--primary-color-700);
+          }
+        }
+      }
+    }
+
+    .selected-character {
+      flex: 1;
+
+      display: flex;
+      justify-content: center;
+
+      .figure {
+        position: relative;
+        // display: inline-block;
+
+        img {
+            clip-path: polygon(15% 0, 100% 0, 100% 85%, 85% 100%, 0 100%, 0 15%);
+        }
+
+        .name {
+            $padding-left: 4rem;
+
+            position: absolute;
+            left: calc($padding-left * -1);
+            right: 2rem;
+            
+            // z-index: 100;
+            background-color: rgba(255, 0, 0, 0.5);
+            color: white;
+
+            padding-left: $padding-left;
+            padding-right: 1rem;
+            padding-top: 0.4rem;
+            padding-bottom: 0.4rem;
+            margin-top: -1rem;
+
+            clip-path: polygon(0 0, 100% 0%, 96% 100%, 0% 100%);
+
+            text-align: right;
+            text-wrap: balance;
+            text-shadow: var(--primary-color) 0 0;
+        }
+      }
+
+      /*
+      
+      display: flex;
+      // flex-direction: column;
+
+      .figure {
+        position: relative;
+
+        img {
+          clip-path: polygon(15% 0, 100% 0, 100% 85%, 85% 100%, 0 100%, 0 15%);
+          // border-radius: 86% 14% 91% 9% / 7% 84% 16% 93%;
+        }
+
+        .name {
+          position: absolute;
+          z-index: 10;
+          bottom: 0;
+
+          background-color: red;
+
+          max-width: 150px;
+          left: -100px;
+          padding-left: 100px;
+
+          // padding-left: 100px;
+          // padding-right: 1rem;
+          // padding-top: 0.2rem;
+          // padding-bottom: 0.2rem;
+
+          // margin-top: -1rem;
+          // margin-left: -100px;
+          
+          clip-path: polygon(0 0, 100% 0%, 96% 100%, 0% 100%);
+
+          text-align: right;
+        }
+      }
+
+      */
+    }
+
+    .characters {
+      $fig-border-size: 0.4rem;
+
+      display: grid;
+      grid-template-columns: repeat(5, /*calc($fig-size + $fig-border-size * 2)*/ auto);
+      grid-auto-rows: auto; //calc($fig-size + $fig-border-size * 2);
+      align-content: flex-start;
+      // gap: 0.4rem;
+
+      height: calc(3 * $chars-box-size + $chars-fig-size / 2);
+      overflow-y: auto;
+      overflow-x: hidden;
+
+      .character {
+        position: relative;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        padding: $chars-padding;
+        box-sizing: border-box;
+
+        transition: all 0.1s;
+
+        img {
+          filter: brightness(0.8);
+          transition: all 0.1s;
+        }
+
+        /*&.selected {
+          border: $fig-border-size solid red;
+        }*/
+
+        &:not(.selected) {
+          cursor: pointer;
+        }
+
+        /*&:hover:not(.selected) {
+          border: $fig-border-size solid gold;
+
+          img {
+            transition: all 0.2s;
+            transform: scale(1.1);
+          }
+        }*/
+
+        &.selected {
+          background-color: gold;
+          img {
+            border-color: gold;
+            filter: brightness(1);
+          }
+        }
+
+        &:hover {
+          // background-color: gold;
+          img {
+            // border-color: gold;
+            filter: brightness(1.2);
+          }
+
+          .name {
+            display: block;
+            opacity: 1;
+          }
+        }
+
+        .name {
+          position: absolute;
+          top: -1rem;
+          z-index: 20;
+
+          opacity: 0;
+          text-align: center;
+
+          transition: opacity 0.1s;
+          // display: block;
+          // text-align: center;
+          // text-wrap: wrap;
+        }
+      }
+    }
+  }

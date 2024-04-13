@@ -6,9 +6,22 @@
 }
 
 :root {
-  --primary-color-500: #ec1d24;
-  --primary-color: #ec1d24;
   --bg-color: #151515;
+
+  --primary-color-50:  #FDE7E8;
+  --primary-color-100: #FBD0D1;
+  --primary-color-200: #F7A6A8;
+  --primary-color-300: #F4777B;
+  --primary-color-400: #F04C52;
+  --primary-color-500: #EC1D24;
+  --primary-color-600: #C61117;
+  --primary-color-700: #920C11;
+  --primary-color-800: #63080B;
+  --primary-color-900: #2F0405;
+  --primary-color-950: #180203;
+  --primary-color: var(--primary-color-500);
+
+  // --player-1-color: 
 }
 
 body {
@@ -22,18 +35,21 @@ body {
 
 // Width
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 0.5rem;
+  height: 0.5rem;
 }
 // Track
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: transparent; //#f1f1f1;
 }
 // Handle
 ::-webkit-scrollbar-thumb {
   // background: #888;
   background-color: var(--primary-color);
+  border-radius: 99rem;
+  scrollbar-width: thin;
 }
 // Handle on hover
 ::-webkit-scrollbar-thumb:hover {
-  background: #555;
+  background-color: var(--primary-color-600);
 }

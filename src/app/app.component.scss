@@ -1,74 +1,86 @@
-main {
-  background-color: var(--bg-color);
+.bg-image {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
 
+  background-image: url('../assets/fundo-1.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position-y: 20%;
+  transform: scale(1.1);
+  filter: blur(8px);
+}
+
+main {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+
+  // background-color: var(--bg-color);
   min-height: 100svh;
+
+  background: rgb(236,29,36);
+  background: linear-gradient(90deg, rgba(236, 29, 36, 0.3) 35%, rgba(0, 95, 255, 0.3) 65%);
+}
+
+.selection-screen {
+  flex: 1;
+
+  display: flex;
+  flex-direction: column;
+
   padding: 2rem;
+  padding-bottom: 0;
 
   h2 {
     color: white;
     font-weight: bolder;
     text-align: center;
   }
-}
 
-.selection-screen {
   .selection-section {
+    flex: 1;
+
     display: flex;
     justify-content: space-between;
 
-    .character-selection {
+    
+    .middle {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
 
+      padding-bottom: 2rem;
 
-      .characters {
-        $fig-size: 100px;
-        $fig-border-size: 0.4rem;
+      :first-child {
+        flex: 1;
 
-        display: grid;
-        grid-template-columns: repeat(5, /*calc($fig-size + $fig-border-size * 2)*/ auto);
-        grid-auto-rows: auto; //calc($fig-size + $fig-border-size * 2);
-        // gap: 0.4rem;
+        .versus {
+          color: white;
+          font-size: 4rem;
+        }
+      }
 
-        height: 15rem;
-        overflow-y: auto;
-        overflow-x: hidden;
-
-        .character {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-
-          // padding: 0.4rem;
-          box-sizing: border-box;
-
+      :last-child {
+        button {
+          background-color: var(--primary-color);
+          color: white;
+  
+          padding: 1rem 1.8rem;
+          border: none;
+          font-size: 2rem;
+          cursor: pointer;
           transition: all 0.1s;
-
-          &.selected {
-            border: $fig-border-size solid red;
-          }
-
-          &:not(.selected) {
-            cursor: pointer;
-          }
-
-          &:hover:not(.selected) {
-            border: $fig-border-size solid gold;
-
-            img {
-              transition: all 0.2s;
-              transform: scale(1.1);
-            }
-          }
-
-          span {
-            display: block;
-            text-align: center;
-            text-wrap: wrap;
+          clip-path: polygon(15% 0, 100% 0, 100% 85%, 85% 100%, 0 100%, 0 15%);
+          letter-spacing: 0.1rem;
+  
+          &:hover {
+            background-color: var(--primary-color-600);
           }
         }
       }
     }
-
   }
 }
 
