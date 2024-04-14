@@ -21,6 +21,22 @@
   --primary-color-950: #180203;
   --primary-color: var(--primary-color-500);
 
+  --secondary-color-50:  #E5EFFF;
+  --secondary-color-100: #CCDFFF;
+  --secondary-color-200: #99BEFF;
+  --secondary-color-300: #669EFF;
+  --secondary-color-400: #337EFF;
+  --secondary-color-500: #005FFF;
+  --secondary-color-600: #004BCC;
+  --secondary-color-700: #003899;
+  --secondary-color-800: #002566;
+  --secondary-color-900: #001333;
+  --secondary-color-950: #000919;
+
+  --secondary-color: #005FFF;
+
+  --scrollbar-size: 0.5rem;
+
   // --player-1-color: 
 }
 
@@ -35,8 +51,8 @@ body {
 
 // Width
 ::-webkit-scrollbar {
-  width: 0.5rem;
-  height: 0.5rem;
+  width: var(--scrollbar-size);
+  height: var(--scrollbar-size);
 }
 // Track
 ::-webkit-scrollbar-track {

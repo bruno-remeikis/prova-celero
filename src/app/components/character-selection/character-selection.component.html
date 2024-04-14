@@ -3,9 +3,13 @@
     <img [src]="getImgUrl(selectedCharacter, 'standard_xlarge')" [alt]="selectedCharacter ? selectedCharacter.name : ''">
     <div class="name">{{ selectedCharacter.name }}</div>
   </div>
+
+  <div *ngIf="!selectedCharacter" class="no-figure">
+    <span>Selecione um personagem</span>
+  </div>
 </div>
 
-<input (keyup)="filterCharacters($event)">
+<input class="input-filterCharacters" placeholder="Pesquisar personagem" (keyup)="filterCharacters($event)">
 
 <!-- Duas janelas (para players 0 e 1) para seleção de heróis -->
 <div class="characters">

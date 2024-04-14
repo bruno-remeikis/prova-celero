@@ -20,7 +20,7 @@ main {
   // background-color: var(--bg-color);
   min-height: 100svh;
 
-  background: rgb(236,29,36);
+  background: var(--primary-color);
   background: linear-gradient(90deg, rgba(236, 29, 36, 0.3) 35%, rgba(0, 95, 255, 0.3) 65%);
 }
 

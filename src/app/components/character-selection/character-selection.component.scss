@@ -1,3 +1,4 @@
+$chars-cols: 5;
 $chars-fig-size: 100px;
 $chars-fig-border: 0.1rem;
 $chars-padding: 0.1rem;
@@ -9,27 +10,58 @@ $selected-char-fig-size: 200px;
     display: flex;
     flex-direction: column;
 
+    width: calc($chars-cols * ($chars-box-size) + var(--scrollbar-size));
+
     // Player 1 (red side)
     &:first-child {
-      .characters {
-        direction: rtl;
+      --s-chars-border-color: var(--primary-color-600);
 
-        .character {
-          img {
-            border: $chars-fig-border solid var(--primary-color-700);
-          }
-        }
-      }
+      --s-selected-char-img-clip-path: polygon(15% 0, 100% 0, 100% 85%, 85% 100%, 0 100%, 0 15%);
+
+      --s-selected-char-name-pl: 8rem;
+      --s-selected-char-name-pr: 1rem;
+      --s-selected-char-name-left: calc(var(--s-selected-char-name-pl) * -1);
+      --s-selected-char-name-right: 2rem;
+      --s-selected-char-name-clip-path: polygon(0 0, 100% 0, 96% 100%, 0 100%);
+      --s-selected-char-name-text-align: right;
+
+      --s-selected-char-name-background-image: linear-gradient(to right, transparent 20%, var(--primary-color) 60%);
+
+      --s-input-border-color: var(--primary-color-600);
+      --s-input-border-ml: calc(var(--scrollbar-size) + $chars-padding);
+      --s-input-border-mr: 0;
+      --s-input-border-clip-path: polygon(0 0, 100% 0%, 96% 100%, 0% 100%);
+      --s-input-border-text-align: left;
+
+      .characters { direction: rtl; }
     }
 
     // Player 1 (blue side)
     &:last-child {
-      .characters {
-        .character {
-          img {
-            border: $chars-fig-border solid var(--primary-color-700);
-          }
-        }
+      --s-chars-border-color: var(--secondary-color-600);
+
+      --s-selected-char-img-clip-path: polygon(0 0, 85% 0, 100% 15%, 100% 100%, 15% 100%, 0 85%);
+
+      --s-selected-char-name-pl: 1rem;
+      --s-selected-char-name-pr: 8rem;
+      --s-selected-char-name-left: 2rem;
+      --s-selected-char-name-right: calc(var(--s-selected-char-name-pr) * -1);
+      --s-selected-char-name-clip-path: polygon(0 0, 100% 0%, 100% 100%, 4% 100%);
+      --s-selected-char-name-text-align: left;
+
+      --s-selected-char-name-background-image: linear-gradient(to left, transparent 20%, var(--secondary-color) 60%);
+
+      --s-input-border-color: var(--secondary-color-600);
+      --s-input-border-ml: 0;
+      --s-input-border-mr: calc(var(--scrollbar-size) + $chars-padding);
+      --s-input-border-clip-path: polygon(0 0, 100% 0%, 100% 100%, 4% 100%);
+      --s-input-border-text-align: right;
+
+      ::-webkit-scrollbar-thumb {
+        background-color: var(--secondary-color);
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background-color: var(--secondary-color-600);
       }
     }
 
@@ -44,83 +76,74 @@ $selected-char-fig-size: 200px;
         // display: inline-block;
 
         img {
-            clip-path: polygon(15% 0, 100% 0, 100% 85%, 85% 100%, 0 100%, 0 15%);
+            clip-path: var(--s-selected-char-img-clip-path);
         }
 
         .name {
-            $padding-left: 4rem;
-
             position: absolute;
-            left: calc($padding-left * -1);
-            right: 2rem;
+            left: var(--s-selected-char-name-left);
+            right: var(--s-selected-char-name-right);
             
-            // z-index: 100;
-            background-color: rgba(255, 0, 0, 0.5);
+            background-image: var(--s-selected-char-name-background-image);
             color: white;
 
-            padding-left: $padding-left;
-            padding-right: 1rem;
+            padding-left: var(--s-selected-char-name-pl);
+            padding-right: var(--s-selected-char-name-pr);
             padding-top: 0.4rem;
             padding-bottom: 0.4rem;
             margin-top: -1rem;
 
-            clip-path: polygon(0 0, 100% 0%, 96% 100%, 0% 100%);
+            clip-path: var(--s-selected-char-name-clip-path);
 
-            text-align: right;
+            text-align: var(--s-selected-char-name-text-align);
             text-wrap: balance;
             text-shadow: var(--primary-color) 0 0;
         }
       }
 
-      /*
-      
-      display: flex;
-      // flex-direction: column;
+      .no-figure {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
 
-      .figure {
-        position: relative;
-
-        img {
-          clip-path: polygon(15% 0, 100% 0, 100% 85%, 85% 100%, 0 100%, 0 15%);
-          // border-radius: 86% 14% 91% 9% / 7% 84% 16% 93%;
-        }
-
-        .name {
-          position: absolute;
-          z-index: 10;
-          bottom: 0;
-
-          background-color: red;
-
-          max-width: 150px;
-          left: -100px;
-          padding-left: 100px;
-
-          // padding-left: 100px;
-          // padding-right: 1rem;
-          // padding-top: 0.2rem;
-          // padding-bottom: 0.2rem;
-
-          // margin-top: -1rem;
-          // margin-left: -100px;
-          
-          clip-path: polygon(0 0, 100% 0%, 96% 100%, 0% 100%);
-
-          text-align: right;
+        span {
+          color: white;
         }
       }
+    }
 
-      */
+    .input-filterCharacters {
+      background-color: rgba(0, 0, 0, 0.2);
+      color: black;
+
+      padding: 0.4rem 0.8rem;
+      border: 0.1rem solid var(--s-input-border-color);
+      border-radius: 0.2rem;
+      margin-left: var(--s-input-border-ml);
+      margin-right: var(--s-input-border-mr);
+
+      clip-path: var(--s-input-border-clip-path);
+
+      text-align: var(--s-input-border-text-align);
+
+      &::-webkit-input-placeholder {
+        color: rgba(255, 255, 255, 0.6);
+        // text-shadow: 0 0 1px var(--primary-color);
+      }
+
+      &:focus {
+        outline-color: gold;
+      }
     }
 
     .characters {
       $fig-border-size: 0.4rem;
 
       display: grid;
-      grid-template-columns: repeat(5, /*calc($fig-size + $fig-border-size * 2)*/ auto);
-      grid-auto-rows: auto; //calc($fig-size + $fig-border-size * 2);
+      grid-template-columns: repeat($chars-cols, auto);
+      grid-auto-rows: auto;
       align-content: flex-start;
-      // gap: 0.4rem;
 
       height: calc(3 * $chars-box-size + $chars-fig-size / 2);
       overflow-y: auto;
@@ -142,24 +165,13 @@ $selected-char-fig-size: 200px;
         img {
           filter: brightness(0.8);
           transition: all 0.1s;
+          border: $chars-fig-border solid var(--s-chars-border-color);
+          border-radius: 0.2rem;
         }
-
-        /*&.selected {
-          border: $fig-border-size solid red;
-        }*/
 
         &:not(.selected) {
           cursor: pointer;
         }
-
-        /*&:hover:not(.selected) {
-          border: $fig-border-size solid gold;
-
-          img {
-            transition: all 0.2s;
-            transform: scale(1.1);
-          }
-        }*/
 
         &.selected {
           background-color: gold;
@@ -170,11 +182,7 @@ $selected-char-fig-size: 200px;
         }
 
         &:hover {
-          // background-color: gold;
-          img {
-            // border-color: gold;
-            filter: brightness(1.2);
-          }
+          img { filter: brightness(1.2); }
 
           .name {
             display: block;
@@ -191,9 +199,6 @@ $selected-char-fig-size: 200px;
           text-align: center;
 
           transition: opacity 0.1s;
-          // display: block;
-          // text-align: center;
-          // text-wrap: wrap;
         }
       }
     }
