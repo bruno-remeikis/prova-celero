@@ -23,9 +23,9 @@ export class MarvelService
       `?apikey=${this.apikey}` +
       `&ts=${this.ts}` +
       `&hash=${this.hash}` +
-      `&limit=${limit}` + 
-      `&offset=${offset}`;
-      (characterName ? `&nameStartsWith=${characterName}` : '')
+      `&limit=${limit}` +
+      `&offset=${offset}` +
+      (characterName ? `&nameStartsWith=${characterName}` : '');
     ;
 
     return this.http.get/*<any[]>*/(url);

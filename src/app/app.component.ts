@@ -1,11 +1,12 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { MarvelService } from './services/marvel.service';
 import { NgFor, NgIf } from '@angular/common';
-import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { CharacterSelectionComponent, CurrentCharHoverEvent, SelectedCharEvent } from './components/character-selection/character-selection.component';
 import { Character } from './types/Character';
-import { ImgUtils } from './utils/ImgUtils';
+import { MarvelUtils } from './utils/MarvelUtils';
+import { FigureComponent } from './components/figure/figure.component';
+import { ModalComponent } from './components/modal/modal.component';
 
 const charTeste: Character = {
   name: 'Herói de Testes',
@@ -24,8 +25,9 @@ const symbolUrl = '../assets/img/symbols/';
     RouterOutlet,
     NgIf,
     NgFor,
-    InfiniteScrollModule,
     CharacterSelectionComponent,
+    FigureComponent,
+    ModalComponent
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
@@ -33,6 +35,7 @@ const symbolUrl = '../assets/img/symbols/';
 export class AppComponent implements OnInit
 {
   initialCharacters: Character[] = [];
+  loadingChars: boolean = true;
   offset = 0;
 
   selectedCharacter: (null | Character)[] = /*[charTeste, charTeste]*/ [null, null];
@@ -54,9 +57,20 @@ export class AppComponent implements OnInit
     [null, null, null],
   ];
 
+  winModalVisible: boolean = false;
+  velhaModalVisible: boolean = false;
+
+  setWinModalVisible(e: boolean) {
+    this.winModalVisible = e;
+  }
+
+  setVelhaModalVisible(e: boolean) {
+    this.velhaModalVisible = e;
+  }
+
   constructor(
     private appService: MarvelService,
-    public imgUtils: ImgUtils
+    public marvelUtils: MarvelUtils,
   ){
     this.loadCharacters();
   }
@@ -66,16 +80,20 @@ export class AppComponent implements OnInit
   }
 
   loadCharacters() {
-    this.appService.getCharacters(0).subscribe(res => {
-      console.log(res);
-      const results = res.data.results.filter((r: any) => !r.thumbnail.path.endsWith('image_not_available'));
+    this.loadingChars = true;
 
-      this.initialCharacters = results
+    this.appService.getCharacters(0).subscribe(res => {
+      const results = this.marvelUtils.filter(res.data.results);
+      this.initialCharacters = results;
+      this.loadingChars = false;
+    },
+    err => {
+      alert('Desculpe. Tivemos um problema ao carregar os personagens');
+      this.loadingChars = false;
     })
   }
 
   selectCharacter(e: SelectedCharEvent) {
-    console.log(e);
     this.selectedCharacter[e.player] = e.c;
   }
 
@@ -83,7 +101,7 @@ export class AppComponent implements OnInit
     this.currentCharHover = e;
   }
 
-  start() {
+  initGame() {
     if(!this.selectedCharacter[0]
     || !this.selectedCharacter[1]) {
       alert('Selecione seus personagens.');
@@ -96,12 +114,26 @@ export class AppComponent implements OnInit
       `${symbolUrl}${this.first === 0 ? 'x' : 'o'}-red.svg`,
       `${symbolUrl}${this.first === 1 ? 'x' : 'o'}-blue.svg`,
     ];
+
+    this.start();
+  }
+
+  start() {
     this.board = [
       [null, null, null],
       [null, null, null],
       [null, null, null],
     ];
     this.inGame = true;
+  }
+
+  restart() {
+    this.switchTurn();
+    this.start();
+  }
+
+  switchTurn() {
+    this.turn = (this.turn + 1) % 2;
   }
 
   range(n: number) {
@@ -141,18 +173,16 @@ export class AppComponent implements OnInit
     const winner = this.verifyPlay();
 
     if(winner) {
-      alert('VENCEU');
+      this.setWinModalVisible(true);
       this.score[this.turn]++;
-      this.start();
       return;
     }
     else if(!this.board.flatMap(p => p).includes(null)) {
-      alert('Xiiiii. Deu velha')
-      this.start();
+      this.setVelhaModalVisible(true);
       return;
     }
 
-    this.turn = (this.turn + 1) % 2; // Troca turno
+    this.switchTurn(); // Troca turno
   }
 
   verifyPlay(): boolean {
@@ -222,8 +252,7 @@ export class AppComponent implements OnInit
     this.currentCellHover = ii;
   }
 
-  unhoverCell(ii: number) {
+  unhoverCell() {
     this.currentCellHover = null;
-    console.log('a')
   }
 }

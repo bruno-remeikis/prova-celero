@@ -1,7 +1,10 @@
 <div class="selected-character">
-  <div *ngIf="selectedCharacter" class="figure">
-    <img [src]="imgUtils.charImgUrl(selectedCharacter, 'standard_xlarge')" [alt]="selectedCharacter ? selectedCharacter.name : ''">
-    <div class="name">{{ selectedCharacter.name }}</div>
+  <div class="figure-container">
+    <app-figure
+      *ngIf="selectedCharacter"
+      [character]="selectedCharacter"
+      [player]="player"
+    ></app-figure>
   </div>
 
   <div *ngIf="!selectedCharacter" class="no-figure">
@@ -11,14 +14,21 @@
 
 <input class="input-filterCharacters" placeholder="Pesquisar personagem" (keyup)="searchForCharacters($event)">
 
-<!-- Duas janelas (para players 0 e 1) para seleção de heróis -->
-<div class="characters" (scroll)="onScrollChars($event)">
-  <div *ngFor="let c of characters"
-    class="character {{ selectedCharacter && c.id === selectedCharacter.id ? 'selected' : '' }}"
-    (click)="sendSelectedCharacter(c)"
-    (mouseenter)="hoverChar(c)"
-    (mouseleave)="unhoverChar(c)"
-  >
-    <img [src]="imgUtils.charImgUrl(c, 'standard_medium')" [alt]="c.name">
+<div class="characters-container">
+  <!-- Duas janelas (para players 0 e 1) para seleção de heróis -->
+  <div class="characters" (scroll)="onScrollChars($event)">
+    <div *ngFor="let c of characters"
+      class="character {{ selectedCharacter && c.id === selectedCharacter.id ? 'selected' : '' }}"
+      (click)="sendSelectedCharacter(c)"
+      (mouseenter)="hoverChar(c)"
+      (mouseleave)="unhoverChar(c)"
+    >
+      <img [src]="marvelUtils.imgUrl(c, 'standard_medium')" [alt]="c.name">
+    </div>
+  </div>
+
+  <div *ngIf="loadingChars || characters.length === 0" class="overlap">
+    <div *ngIf="loadingChars" class="three-square-loader"></div>
+    <span *ngIf="!loadingChars && characters.length === 0">Nenhum resultado encontrado</span>
   </div>
 </div>

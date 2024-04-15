@@ -1,0 +1,8 @@
+<div *ngIf="visible" class="overlay" (click)="innerCloseable ? toggle() : false">
+
+  <div class="modal" (click)="$event.stopPropagation()">
+    <button *ngIf="innerCloseable" (click)="toggle()">x</button>
+    <ng-content></ng-content>
+  </div>
+
+</div>

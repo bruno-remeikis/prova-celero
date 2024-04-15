@@ -1,9 +1,9 @@
 import { Component, EventEmitter, HostBinding, HostListener, Input, Output } from '@angular/core';
 import { Character } from '../../types/Character';
 import { NgFor, NgIf } from '@angular/common';
-import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { MarvelService } from '../../services/marvel.service';
-import { ImgUtils } from '../../utils/ImgUtils';
+import { MarvelUtils } from '../../utils/MarvelUtils';
+import { FigureComponent } from '../figure/figure.component';
 
 export type SelectedCharEvent = {
   c: Character;
@@ -18,7 +18,7 @@ export type CurrentCharHoverEvent = string | null
   imports: [
     NgIf,
     NgFor,
-    InfiniteScrollModule,
+    FigureComponent
   ],
   templateUrl: './character-selection.component.html',
   styleUrl: './character-selection.component.scss',
@@ -28,6 +28,8 @@ export class CharacterSelectionComponent
   @Input() player: number = -1;
 
   @Input() characters: Character[] = [];
+
+  @Input() loadingChars: boolean = false;
 
   @Output() selectedCharEvent = new EventEmitter<SelectedCharEvent>();
 
@@ -43,7 +45,7 @@ export class CharacterSelectionComponent
 
   constructor(
     private marvelService: MarvelService,
-    public imgUtils: ImgUtils,
+    public marvelUtils: MarvelUtils,
   ) {}
 
   sendSelectedCharacter(c: Character) {
@@ -54,15 +56,22 @@ export class CharacterSelectionComponent
   searchForCharacters(event: any) {
     this.inputFilterCharacters = event.target.value;
     this.paginationIndex = 0;
+    this.characters = [];
     this.filterCharacters();
   }
 
   filterCharacters() {
+    this.loadingChars = true;
+
     this.marvelService.getCharacters(this.paginationIndex, this.inputFilterCharacters).subscribe(res => {
-      const results = res.data.results.filter((r: any) => !r.thumbnail.path.endsWith('image_not_available'));
-      this.characters.push(results);
-      console.log(this.characters)
-    })
+      const results = this.marvelUtils.filter(res.data.results);
+      this.characters = [...this.characters, ...results];
+      this.loadingChars = false;
+    },
+    err => {
+      alert('Desculpe. Tivemos um problema ao carregar os personagens');
+      this.loadingChars = false;
+    });
   }
 
   hoverChar(c: Character) {
@@ -73,13 +82,12 @@ export class CharacterSelectionComponent
     this.currentCharHoverEvent.emit(null);
   }
 
-  // Método chamado quando o usuário rola a página
+  // Método chamado quando o usuário rola o elemento
   @HostListener('scroll', ['$event'])
   onScrollChars(event: any) {
     const element = event.target;
     // Verificar se o usuário chegou ao final da página
-    if (element.scrollHeight - Math.ceil(element.scrollTop) === element.clientHeight) {
-      console.log('SCROLL')
+    if (element.scrollHeight - Math.ceil(element.scrollTop) - 10 <= element.clientHeight) {
       // Carregar mais itens quando o usuário chega ao final
       this.paginationIndex++;
       this.filterCharacters();

@@ -13,32 +13,36 @@
       <div class="bg-image"></div>
       <div class="gradient"></div>
     </div>
-    
+
     <!-- <h2>SELEÇÃO</h2> -->
 
     <div class="container">
       <app-character-selection
         [player]="0"
         [characters]="initialCharacters"
+        [loadingChars]="loadingChars"
         (selectedCharEvent)="selectCharacter($event)"
         (currentCharHoverEvent)="charHover($event)"
       ></app-character-selection>
 
       <div class="middle">
-        <div>
+        <div class="container">
+          <img class="logo" src="../assets/img/logos/marvel.png" alt="">
           <span class="versus">VS</span>
+          <!-- <img class="versus" src="../assets/img/vs.png" alt="Versus"> -->
         </div>
-        <div>
+        <div class="container">
           <div class="char-name">
             <span *ngIf="currentCharHover">{{ currentCharHover }}</span>
-            <button (click)="start()">Lutar!</button>
           </div>
+          <button class="start-btn" (click)="initGame()" [disabled]="!selectedCharacter[0] || !selectedCharacter[1]">Lutar!</button>
         </div>
       </div>
 
       <app-character-selection
         [player]="1"
         [characters]="initialCharacters"
+        [loadingChars]="loadingChars"
         (selectedCharEvent)="selectCharacter($event)"
         (currentCharHoverEvent)="charHover($event)"
       ></app-character-selection>
@@ -55,23 +59,30 @@
     <div class="bg-image-container">
       <div class="bg-image"></div>
     </div>
-    
+
+    <div class="score">
+      <span>{{ score[0] }}</span>
+      <span>:</span>
+      <span>{{ score[1] }}</span>
+    </div>
+
     <div class="container">
-      <div>
+      <!-- <div>
         <button (click)="exit()">Voltar</button>
-      </div>
+      </div> -->
 
       <div class="game">
 
         <!-- Lado do Jogador 1 (esquerdo; vermelho) -->
         <div class="player-side" *ngIf="selectedCharacter[0]">
-          <div class="info">
-            <img [src]="imgUtils.charImgUrl(selectedCharacter[0], 'standard_xlarge')" alt="">
-            <span class="name">{{ selectedCharacter[0].name }}</span>
-            <span>Pontos: {{ score[0] }}</span>
-          </div>
+          <div class="player-container">
+            <app-figure
+              [character]="selectedCharacter[0]"
+              [player]="0"
+            ></app-figure>
 
-          <img [src]="symbols[0]" alt="">
+            <img class="symbol" [src]="symbols[0]" alt="">
+          </div>
         </div>
 
         <!-- Tablueiro -->
@@ -80,7 +91,7 @@
             class="cell"
             (click)="cellClick(i)"
             (mouseenter)="hoverCell(i)"
-            (mouseleave)="unhoverCell(i)"
+            (mouseleave)="unhoverCell()"
             [class.empty]="getPlayer(i) === null"
             [innerHtml]="getSymbol(i)"
           ></button>
@@ -91,19 +102,49 @@
 
         <!-- Lado do Jogador 2 (direito; azul) -->
         <div class="player-side" *ngIf="selectedCharacter[1]">
-          <div class="info">
-            <img [src]="imgUtils.charImgUrl(selectedCharacter[1], 'standard_xlarge')" alt="">
-            <span class="name">{{ selectedCharacter[1].name }}</span>
-            <span>Pontos: {{ score[1] }}</span>
-          </div>
+          <div class="player-container">
+            <app-figure
+              [character]="selectedCharacter[1]"
+              [player]="1"
+            ></app-figure>
 
-          <img [src]="symbols[1]" alt="">
+            <img class="symbol" [src]="symbols[1]" alt="">
+          </div>
         </div>
 
       </div>
     </div>
-    
+
   </div>
 </main>
+
+<app-modal
+  *ngIf="winModalVisible"
+  [visible]="winModalVisible"
+  (visibleEvent)="setWinModalVisible($event)"
+  [innerCloseable]="false"
+  class="endgame-modal"
+>
+  <div class="container">
+    <span class="title">
+      Vitória de
+      <span [class]="'player-' + turn">{{ selectedCharacter[turn].name }}</span>
+    </span>
+    <button (click)="setWinModalVisible(false); start();">Novo jogo</button>
+  </div>
+</app-modal>
+
+<app-modal
+  *ngIf="velhaModalVisible"
+  [visible]="velhaModalVisible"
+  (visibleEvent)="setVelhaModalVisible($event)"
+  [innerCloseable]="false"
+  class="endgame-modal"
+>
+  <div class="container">
+    <span class="title">Empate</span>
+    <button (click)="setVelhaModalVisible(false); start();">Novo jogo</button>
+  </div>
+</app-modal>
 
 <!-- <router-outlet /> -->
