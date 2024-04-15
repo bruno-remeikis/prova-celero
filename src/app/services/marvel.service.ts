@@ -15,13 +15,16 @@ export class MarvelService
 
   constructor(private http: HttpClient) { }
 
-  getCharacters(offset: number, characterName?: string): Observable<any> {
+  getCharacters(paginationIndex: number, characterName?: string): Observable<any> {
+    const limit = 40;
+    const offset = limit * paginationIndex;
+
     const url = `${this.apiUrl}/characters` +
       `?apikey=${this.apikey}` +
       `&ts=${this.ts}` +
       `&hash=${this.hash}` +
-      `&limit=40` + 
-      //`&offset=${offset}`;
+      `&limit=${limit}` + 
+      `&offset=${offset}`;
       (characterName ? `&nameStartsWith=${characterName}` : '')
     ;
 

@@ -1,6 +1,6 @@
 <div class="selected-character">
   <div *ngIf="selectedCharacter" class="figure">
-    <img [src]="getImgUrl(selectedCharacter, 'standard_xlarge')" [alt]="selectedCharacter ? selectedCharacter.name : ''">
+    <img [src]="imgUtils.charImgUrl(selectedCharacter, 'standard_xlarge')" [alt]="selectedCharacter ? selectedCharacter.name : ''">
     <div class="name">{{ selectedCharacter.name }}</div>
   </div>
 
@@ -9,12 +9,16 @@
   </div>
 </div>
 
-<input class="input-filterCharacters" placeholder="Pesquisar personagem" (keyup)="filterCharacters($event)">
+<input class="input-filterCharacters" placeholder="Pesquisar personagem" (keyup)="searchForCharacters($event)">
 
 <!-- Duas janelas (para players 0 e 1) para seleção de heróis -->
-<div class="characters">
-  <div *ngFor="let c of characters" class="character {{ selectedCharacter && c.id === selectedCharacter.id ? 'selected' : '' }}" (click)="selectCharacter(c)">
-    <img [src]="getImgUrl(c, 'standard_medium')" [alt]="c.name">
-    <span class="name">{{ c.name }}</span>
+<div class="characters" (scroll)="onScrollChars($event)">
+  <div *ngFor="let c of characters"
+    class="character {{ selectedCharacter && c.id === selectedCharacter.id ? 'selected' : '' }}"
+    (click)="sendSelectedCharacter(c)"
+    (mouseenter)="hoverChar(c)"
+    (mouseleave)="unhoverChar(c)"
+  >
+    <img [src]="imgUtils.charImgUrl(c, 'standard_medium')" [alt]="c.name">
   </div>
 </div>

@@ -1,28 +1,33 @@
-.bg-image {
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-
-  background-image: url('../assets/fundo-1.png');
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position-y: 20%;
-  transform: scale(1.1);
-  filter: blur(8px);
-}
-
 main {
-  position: relative;
-
   display: flex;
   flex-direction: column;
 
-  // background-color: var(--bg-color);
   min-height: 100svh;
+  
+  .developed-by {
+    position: fixed;
+    right: 0;
+    top: 0;
+    z-index: 1000;
 
-  background: var(--primary-color);
-  background: linear-gradient(90deg, rgba(236, 29, 36, 0.3) 35%, rgba(0, 95, 255, 0.3) 65%);
+    color: white;
+
+    padding: 1rem;
+    border-bottom-left-radius: 0.6rem;
+
+    font-size: 0.8rem;
+    text-decoration: none;
+
+    transition: all 0.2s;
+
+    &:hover {
+      background-color: var(--primary-color-600);
+      color: var(--primary-color-50);
+    }
+  }
 }
+
+// --- SELECTION SCREEN ---
 
 .selection-screen {
   flex: 1;
@@ -30,21 +35,40 @@ main {
   display: flex;
   flex-direction: column;
 
-  padding: 2rem;
-  padding-bottom: 0;
-
-  h2 {
-    color: white;
-    font-weight: bolder;
-    text-align: center;
+  .bg-image-container {
+    .bg-image {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+    
+      background-image: url('../assets/fundo-1.png');
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position-y: 20%;
+      transform: scale(1.1);
+      filter: blur(8px);
+    }
+  
+    .gradient {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+  
+      background-color: var(--primary-color);
+      background: linear-gradient(90deg, rgba(236, 29, 36, 0.3) 35%, rgba(0, 95, 255, 0.3) 65%);
+    }
   }
 
-  .selection-section {
+  .container {
+    z-index: 500;
+
     flex: 1;
 
     display: flex;
     justify-content: space-between;
 
+    padding: 2rem;
+    padding-bottom: 0;
     
     .middle {
       display: flex;
@@ -63,7 +87,21 @@ main {
       }
 
       :last-child {
+        width: 10rem;
+        
+        .char-name {
+          span {
+            display: block;
+            color: rgba(255, 255, 255, 0.75);
+            margin-bottom: 2rem;
+            text-align: center;
+            text-wrap: balance;
+            font-size: 1.2rem;
+          }
+        }
+
         button {
+          display: block;
           background-color: var(--primary-color);
           color: white;
   
@@ -84,5 +122,152 @@ main {
   }
 }
 
+// --- SELECTION SCREEN ---
 
+.game-screen {
+  flex: 1;
 
+  display: flex;
+  flex-direction: column;
+
+  .bg-image-container {
+    .bg-image {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+    
+      background-image: url('../assets/game-bg-7.jpg');
+      background-repeat: no-repeat;
+      background-size: cover;
+      // background-position-y: 20%;
+      background-position: center;
+      transform: scale(1.1);
+      // filter: blur(4px);
+      filter: brightness(0.75);
+      // filter: grayscale(1);
+    }
+  }
+
+  .container {
+    z-index: 500;
+
+    flex: 1;
+
+    display: flex;
+    flex-direction: column;
+
+    button {
+      
+    }
+
+    .game {
+      flex: 1;
+
+      display: flex;
+      // flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
+      padding: 2rem;
+
+      .player-side {
+        flex: 1;
+
+        display: flex;
+        
+        // background-color: green;
+
+        &:first-child {
+          align-self: start;
+          
+        }
+
+        &:last-child {
+          align-self: end;
+
+          flex-direction: row-reverse;
+        }
+
+        .info {
+          .name {
+            display: block;
+            color: white;
+          }
+        }
+
+        .simbol {
+          // transform: scale(0.3);
+        }
+      }
+
+      .board {
+        $gap: 0.5rem;
+        $cellSize: 10rem;
+
+        position: relative;
+
+        display: grid;
+        grid-template-columns: repeat(3, $cellSize);
+        grid-row: $cellSize;
+        gap: $gap;
+
+        width: calc(3 * $cellSize + 2 * $gap);
+
+        .cell {
+          z-index: 100;
+          
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          width: $cellSize;
+          height: $cellSize;
+          background-color: transparent;
+          border: none;
+
+          cursor: pointer;
+          transition: background-color 0.1s;
+
+          &:not(.empty) {
+            cursor: inherit;
+          }
+
+          &.empty:hover {
+            opacity: 0.5;
+            background-color: rgba(255, 255, 255, 0.2);
+           
+            // background-color: rgba(0, 0, 0, 0.1);
+          }
+
+          img {
+            // font-size: 0.1rem;
+            // transform: scale(0.5);
+            color: white;
+          }
+        }
+
+        .separators {
+          position: absolute;
+          inset: 0;
+
+          display: flex;
+          justify-content: space-evenly;
+
+          div {
+            width: $gap;
+            height: 100%;
+            // background-color: rgb(255, 255, 255, 0.6);
+            background-color: var(--primary-color-200);
+            border-right: 4px solid var(--secondary-color-700);
+            // border-radius: 99rem;
+            border-radius: 0.1rem;
+          }
+
+          &.horizontal {
+            transform: rotate(90deg);
+          }
+        }
+      }
+    }
+  }
+}
