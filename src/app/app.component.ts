@@ -32,7 +32,7 @@ const symbolUrl = '../assets/img/symbols/';
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
-export class AppComponent implements OnInit
+export class AppComponent
 {
   initialCharacters: Character[] = [];
   loadingChars: boolean = true;
@@ -73,10 +73,6 @@ export class AppComponent implements OnInit
     public marvelUtils: MarvelUtils,
   ){
     this.loadCharacters();
-  }
-
-  ngOnInit(): void {
-
   }
 
   loadCharacters() {
@@ -136,9 +132,8 @@ export class AppComponent implements OnInit
     this.turn = (this.turn + 1) % 2;
   }
 
-  range(n: number) {
-    return new Array(n).fill(0).map((_, i) => i);
-  }
+  range = (n: number) =>
+    new Array(n).fill(0).map((_, i) => i);
 
   splitIndex = (ii: number): [number, number] => [
     Math.floor(ii / 3),
@@ -158,7 +153,7 @@ export class AppComponent implements OnInit
       ? `<img src="${this.symbols[player]}" alt="">`
       : (
         ii === this.currentCellHover
-          ? `<img src="${this.symbols[this.turn]}" class="aaaaa" alt="">`
+          ? `<img src="${this.symbols[this.turn]}" alt="">`
           : ''
       )
   }
@@ -177,7 +172,7 @@ export class AppComponent implements OnInit
       this.score[this.turn]++;
       return;
     }
-    else if(!this.board.flatMap(p => p).includes(null)) {
+    else if(this.isBoardFull()) {
       this.setVelhaModalVisible(true);
       return;
     }
@@ -243,6 +238,9 @@ export class AppComponent implements OnInit
 
     return false;
   }
+
+  isBoardFull = () =>
+    !this.board.flatMap(p => p).includes(null);
 
   exit() {
     this.inGame = false;
