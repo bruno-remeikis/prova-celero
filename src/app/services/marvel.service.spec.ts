@@ -1,22 +1,26 @@
 import { TestBed } from '@angular/core/testing';
 
 import { MarvelService } from './marvel.service';
-import { HttpClient } from '@angular/common/http';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
-/*describe('MarvelService', () => {
-  let service: MarvelService;
-  //let http: HttpClient;
+describe('MarvelService', () =>
+{
+  let marvelService: MarvelService;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      // imports: [
-      //   HttpClient
-      // ]
-    });
-    service = TestBed.inject(MarvelService);
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [
+        HttpClientTestingModule
+      ],
+    }).compileComponents();
+
+    marvelService = TestBed.inject(MarvelService);
   });
 
-  it('should be created', () => {
-    expect(service).toBeTruthy();
+  it('should create the service', () => {
+    expect(marvelService).toBeTruthy();
   });
-});*/
+
+
+
+});

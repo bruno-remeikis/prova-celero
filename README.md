@@ -1,27 +1,30 @@
-# ProvaCelero
+# Prova da Celero Para Desenvolvedor Front-end Angular
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.4.
+Esta é uma aplicação desenvolvida para responder à prova da [Celero](https://celero.com.br/)
 
-## Development server
+_Projeto gerado com [Angular CLI](https://github.com/angular/angular-cli) na versão 17.3.4._
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## ✨ Demo
 
-## Code scaffolding
+Confira o resultado deste projeto no link abaixo:<br>
+[https://prova-celero.vercel.app/](https://prova-celero.vercel.app/)
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+<br>
+
+## Como rodar o projeto
+
+É necessário que se tenha o [Node](https://nodejs.org/en) e o [Angular CLI](https://github.com/angular/angular-cli) instalados em sua máquina.
+
+O [Node](https://nodejs.org/en) pode ser baixado e instalado em seu próprio site. Já para instalar a [Angular CLI](https://github.com/angular/angular-cli), você pode utilizar o comando `npm install -g @angular/cli`
+
+Após clonar o projeto para sua máquina, abra-o através de um terminal e execute o comando `npm install` ou `npm i` (você também pode utilizar outro gerenciador de pacotes alternativo ao [npm](https://www.npmjs.com/) como [yarn](https://yarnpkg.com/) ou [pnpm](https://pnpm.io/pt/)).
+
+Com todas as dependências devidamente instaladas, você pode executar os seguintes comandos:
+
+- `npm run start` ou `ng serve`: para rodar a aplicação.
+  Acesse-a através do link [http://localhost:4200/](http://localhost:4200/)
+- `npm run test` ou `ng test`: para rodas os testes unitários da aplicação. O resultado pode ser visto em [http://localhost:9876/](http://localhost:9876/)
 
 ## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+Rode `npm run build` ou `ng build` para construir o projeto. O artefato da construção será armazenado no diretório `dist/`
