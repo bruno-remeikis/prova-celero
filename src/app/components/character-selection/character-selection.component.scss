@@ -1,5 +1,5 @@
 $chars-cols: 5;
-$chars-fig-size: 100px;
+$chars-fig-size: 6.25rem; // <- 100px
 $chars-fig-border: 0.1rem;
 $chars-padding: 0.1rem;
 $chars-box-size: calc($chars-fig-size + $chars-padding * 2 + $chars-fig-border * 2);
@@ -16,19 +16,6 @@ $selected-char-fig-size: 200px;
   &:first-child {
     --s-chars-border-color: var(--primary-color-600);
 
-    /*
-    --s-selected-char-img-clip-path: polygon(15% 0, 100% 0, 100% 85%, 85% 100%, 0 100%, 0 15%);
-
-    --s-selected-char-name-pl: 8rem;
-    --s-selected-char-name-pr: 1rem;
-    --s-selected-char-name-left: calc(var(--s-selected-char-name-pl) * -1);
-    --s-selected-char-name-right: 2rem;
-    --s-selected-char-name-clip-path: polygon(0 0, 100% 0, 96% 100%, 0 100%);
-    --s-selected-char-name-text-align: right;
-
-    --s-selected-char-name-background-image: linear-gradient(to right, transparent 20%, var(--primary-color) 60%);
-    */
-
     --s-input-border-color: var(--primary-color-600);
     --s-input-border-ml: calc(var(--scrollbar-size) + $chars-padding);
     --s-input-border-mr: 0;
@@ -41,19 +28,6 @@ $selected-char-fig-size: 200px;
   // Player 1 (blue side)
   &:last-child {
     --s-chars-border-color: var(--secondary-color-600);
-
-    /*
-    --s-selected-char-img-clip-path: polygon(0 0, 85% 0, 100% 15%, 100% 100%, 15% 100%, 0 85%);
-
-    --s-selected-char-name-pl: 1rem;
-    --s-selected-char-name-pr: 8rem;
-    --s-selected-char-name-left: 2rem;
-    --s-selected-char-name-right: calc(var(--s-selected-char-name-pr) * -1);
-    --s-selected-char-name-clip-path: polygon(0 0, 100% 0%, 100% 100%, 4% 100%);
-    --s-selected-char-name-text-align: left;
-
-    --s-selected-char-name-background-image: linear-gradient(to left, transparent 20%, var(--secondary-color) 60%);
-    */
 
     --s-input-border-color: var(--secondary-color-600);
     --s-input-border-ml: 0;
@@ -80,35 +54,6 @@ $selected-char-fig-size: 200px;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-
-      /*.figure {
-        position: relative;
-
-        img {
-            clip-path: var(--s-selected-char-img-clip-path);
-        }
-
-        .name {
-            position: absolute;
-            left: var(--s-selected-char-name-left);
-            right: var(--s-selected-char-name-right);
-
-            background-image: var(--s-selected-char-name-background-image);
-            color: white;
-
-            padding-left: var(--s-selected-char-name-pl);
-            padding-right: var(--s-selected-char-name-pr);
-            padding-top: 0.4rem;
-            padding-bottom: 0.4rem;
-            margin-top: -1rem;
-
-            clip-path: var(--s-selected-char-name-clip-path);
-
-            text-align: var(--s-selected-char-name-text-align);
-            text-wrap: balance;
-            text-shadow: var(--primary-color) 0 0;
-        }
-      }*/
     }
 
     .no-figure {
@@ -191,7 +136,8 @@ $selected-char-fig-size: 200px;
         img {
           filter: brightness(0.8);
           transition: all 0.1s;
-          border: $chars-fig-border solid var(--s-chars-border-color);
+          // border: $chars-fig-border solid var(--s-chars-border-color);
+          filter: drop-shadow(0 0 3px var(--s-chars-border-color));
           border-radius: 0.2rem;
         }
 

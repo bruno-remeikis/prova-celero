@@ -26,7 +26,8 @@
   position: relative;
 
   img {
-      clip-path: var(--s-selected-char-img-clip-path);
+    width: 15.625rem; // <- 250px;
+    clip-path: var(--s-selected-char-img-clip-path);
   }
 
   .name {

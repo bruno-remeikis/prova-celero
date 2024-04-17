@@ -68,6 +68,7 @@ export class AppComponent
   velhaModalVisible: boolean = false;
 
   win: WinProps | null = null;
+  winAnimationTime = 1; // in seconds
 
   setWinModalVisible(e: boolean) {
     this.winModalVisible = e;
@@ -154,17 +155,26 @@ export class AppComponent
     return this.board[i][j];
   }
 
-  getSymbol(ii: number) {
+  /*getSymbol(ii: number) {
     // const [ i, j ] = this.splitIndex(ii);
 
     const player = this.getPlayer(ii);
     return player !== null
-      ? `<img src="${this.symbols[player]}" alt="">`
+      ? `<img class="symbol" src="${this.symbols[player]}" alt="symbol" style="filter: drop-shadow(0px 0px 1px white);">`
       : (
         ii === this.currentCellHover
-          ? `<img src="${this.symbols[this.turn]}" alt="">`
+          ? `<img class="symbol" src="${this.symbols[this.turn]}" alt="symbol" style="filter: drop-shadow(0px 0px 1px white);">`
           : ''
       )
+  }*/
+
+  getSymbolUrl(ii: number): string {
+    const player = this.getPlayer(ii);
+
+    if(player !== null)
+      return this.symbols[player];
+
+    return this.symbols[this.turn];
   }
 
   cellClick(ii: number) {
@@ -181,7 +191,7 @@ export class AppComponent
       this.win = win;
       setTimeout(() => {
         this.setWinModalVisible(true);
-      }, 1000);
+      }, this.winAnimationTime * 1000);
       return;
     }
     else if(this.isBoardFull()) {

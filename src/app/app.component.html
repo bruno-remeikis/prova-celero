@@ -81,20 +81,26 @@
               [player]="0"
             ></app-figure>
 
-            <img class="symbol" [src]="symbols[0]" alt="">
+            <img class="symbol" [src]="symbols[0]" alt="symbol">
           </div>
         </div>
 
         <!-- Tablueiro -->
         <div class="board">
+          <!-- [innerHtml]="getSymbol(i)" -->
           <button *ngFor="let i of range(9)"
             class="cell"
             (click)="cellClick(i)"
             (mouseenter)="hoverCell(i)"
             (mouseleave)="unhoverCell()"
             [class.empty]="getPlayer(i) === null"
-            [innerHtml]="getSymbol(i)"
-          ></button>
+          >
+            <img *ngIf="getPlayer(i) !== null || currentCellHover === i"
+              class="symbol"
+              [src]="getSymbolUrl(i)"
+              alt="symbol"
+            >
+          </button>
 
           <div class="separators"> <div></div> <div></div> </div>
           <div class="separators horizontal"> <div></div> <div></div> </div>
@@ -102,6 +108,7 @@
           <div *ngIf="win"
             [class]="'victory-cut running ' + win.orientation"
             [style.--i]="win.orientation === 'horizontal' || win.orientation === 'vertical' ? win.i : 1"
+            [style.--win-animation-time]="winAnimationTime + 's'"
           > <div></div> </div>
         </div>
 

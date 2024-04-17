@@ -118,3 +118,10 @@ body {
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+@media only screen and (max-width: 1400px) {
+  :root { font-size: 75%; }
+}
+@media only screen and (max-width: 1030px) {
+  :root { font-size: 50%; }
+}

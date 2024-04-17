@@ -87,7 +87,8 @@ export class CharacterSelectionComponent
   onScrollChars(event: any) {
     const element = event.target;
     // Verificar se o usuário chegou ao final da página
-    if (element.scrollHeight - Math.ceil(element.scrollTop) - 10 <= element.clientHeight) {
+    if(element.scrollHeight - Math.ceil(element.scrollTop) - 10 <= element.clientHeight
+    && !this.loadingChars) {
       // Carregar mais itens quando o usuário chega ao final
       this.paginationIndex++;
       this.filterCharacters();
