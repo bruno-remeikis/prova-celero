@@ -349,6 +349,45 @@ main {
 
           &.horizontal { transform: rotate(90deg); }
         }
+
+        .victory-cut {
+          z-index: 9999;
+          position: absolute;
+          inset: 0;
+
+          div {
+            $cutWeight: 0.6rem;
+
+            width: 100%;
+            height: $cutWeight;
+            background-color: white;
+            margin-top: calc(
+                $cellSize / 2 +
+                $cutWeight / 2 +
+                $cellSize * var(--i)
+            );
+            border-radius: 99rem;
+          }
+
+          &.running div {
+            animation: cut 1s;
+          }
+
+          &.horizontal {
+
+          }
+          &.vertical {
+            transform: rotate(-90deg);
+          }
+          &.primary-diagonal {
+            --i: 1 !important;
+            transform: rotate(45deg);
+          }
+          &.secondary-diagonal {
+            --i: 1 !important;
+            transform: rotate(-45deg);
+          }
+        }
       }
     }
   }
@@ -389,4 +428,9 @@ main {
       }
     }
   }
+}
+
+@keyframes cut {
+  from { width: 0; }
+  to { width: 100%; }
 }

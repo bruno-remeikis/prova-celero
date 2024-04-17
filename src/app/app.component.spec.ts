@@ -113,16 +113,16 @@ describe('AppComponent', () =>
         [null, null, null],
         [null, null, null],
       ];
-      expect(app.verifyPlay()).toBeTrue();
+      expect(app.verifyPlay()).toEqual({ i: 0, orientation: 'horizontal' });
     });
 
     it('should return true for a vertical win', () => {
       app.board = [
-        [1, null, null],
-        [1, null, null],
-        [1, null, null],
+        [null, null, 1],
+        [null, null, 1],
+        [null, null, 1],
       ];
-      expect(app.verifyPlay()).toBeTrue();
+      expect(app.verifyPlay()).toEqual({ i: 2, orientation: 'vertical' });
     });
 
     it('should return true for a diagonal win (principal)', () => {
@@ -131,7 +131,7 @@ describe('AppComponent', () =>
         [null, 1, null],
         [null, null, 1],
       ];
-      expect(app.verifyPlay()).toBeTrue();
+      expect(app.verifyPlay()).toEqual({ orientation: 'primary-diagonal' });
     });
 
     it('should return true for a diagonal win (secondary)', () => {
@@ -140,7 +140,7 @@ describe('AppComponent', () =>
         [null, 1, null],
         [1, null, null],
       ];
-      expect(app.verifyPlay()).toBeTrue();
+      expect(app.verifyPlay()).toEqual({ orientation: 'secondary-diagonal' });
     });
 
     it('should return false for no win', () => {
@@ -149,7 +149,7 @@ describe('AppComponent', () =>
         [null, null, 2],
         [2, 1, 0],
       ];
-      expect(app.verifyPlay()).toBeFalse();
+      expect(app.verifyPlay()).toBeNull();
     });
 
     it('should return false for no win', () => {
@@ -158,7 +158,7 @@ describe('AppComponent', () =>
         [null, null, null],
         [null, null, null],
       ];
-      expect(app.verifyPlay()).toBeFalse();
+      expect(app.verifyPlay()).toBeNull();
     });
   });
 

@@ -98,6 +98,11 @@
 
           <div class="separators"> <div></div> <div></div> </div>
           <div class="separators horizontal"> <div></div> <div></div> </div>
+
+          <div *ngIf="win"
+            [class]="'victory-cut running ' + win.orientation"
+            [style.--i]="win.orientation === 'horizontal' || win.orientation === 'vertical' ? win.i : 1"
+          > <div></div> </div>
         </div>
 
         <!-- Lado do Jogador 2 (direito; azul) -->
@@ -130,7 +135,7 @@
       Vitória de
       <span [class]="'player-' + turn">{{ selectedCharacter[turn].name }}</span>
     </span>
-    <button (click)="setWinModalVisible(false); start();">Novo jogo</button>
+    <button (click)="resetWin(); setWinModalVisible(false); start();">Novo jogo</button>
   </div>
 </app-modal>
 

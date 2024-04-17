@@ -8,6 +8,13 @@ import { MarvelUtils } from './utils/MarvelUtils';
 import { FigureComponent } from './components/figure/figure.component';
 import { ModalComponent } from './components/modal/modal.component';
 
+type WinProps = {
+  i: number;
+  orientation: 'horizontal' | 'vertical';
+} | {
+  orientation: 'primary-diagonal' | 'secondary-diagonal';
+};
+
 const charTeste: Character = {
   name: 'Herói de Testes',
   thumbnail: {
@@ -59,6 +66,8 @@ export class AppComponent
 
   winModalVisible: boolean = false;
   velhaModalVisible: boolean = false;
+
+  win: WinProps | null = null;
 
   setWinModalVisible(e: boolean) {
     this.winModalVisible = e;
@@ -165,11 +174,14 @@ export class AppComponent
       return;
 
     this.board[i][j] = this.turn; // Registra jogada
-    const winner = this.verifyPlay();
+    const win = this.verifyPlay();
 
-    if(winner) {
-      this.setWinModalVisible(true);
+    if(win) {
       this.score[this.turn]++;
+      this.win = win;
+      setTimeout(() => {
+        this.setWinModalVisible(true);
+      }, 1000);
       return;
     }
     else if(this.isBoardFull()) {
@@ -180,7 +192,7 @@ export class AppComponent
     this.switchTurn(); // Troca turno
   }
 
-  verifyPlay(): boolean {
+  verifyPlay(): WinProps | null {
     /*
     for(let i = 0; i < this.board.length; i++) {
       if(this.board[i][0] == null)
@@ -207,7 +219,7 @@ export class AppComponent
       if(this.board[i][0] !== null
       && this.board[i][0] === this.board[i][1]
       && this.board[i][0] === this.board[i][2]) {
-        return true;
+        return { i, orientation: 'horizontal' };
       }
     }
 
@@ -216,7 +228,7 @@ export class AppComponent
       if(this.board[0][j] !== null
       && this.board[0][j] === this.board[1][j]
       && this.board[0][j] === this.board[2][j]) {
-        return true;
+        return { i: j, orientation: 'vertical' };
       }
     }
 
@@ -225,7 +237,7 @@ export class AppComponent
     && this.board[0][0] === this.board[1][1]
     && this.board[0][0] === this.board[2][2]
     ) {
-      return true;
+      return { orientation: 'primary-diagonal' };
     }
 
     // Diagonal secundária
@@ -233,10 +245,10 @@ export class AppComponent
     && this.board[2][0] === this.board[1][1]
     && this.board[2][0] === this.board[0][2]
     ) {
-      return true;
+      return { orientation: 'secondary-diagonal' };
     }
 
-    return false;
+    return null;
   }
 
   isBoardFull = () =>
@@ -252,5 +264,9 @@ export class AppComponent
 
   unhoverCell() {
     this.currentCellHover = null;
+  }
+
+  resetWin() {
+    this.win = null;
   }
 }
