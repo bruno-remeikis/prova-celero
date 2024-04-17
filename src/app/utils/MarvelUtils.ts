@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { Character } from "../types/Character";
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root'
 })
 export class MarvelUtils
 {

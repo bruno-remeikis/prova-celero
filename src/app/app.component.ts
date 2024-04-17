@@ -96,7 +96,7 @@ export class AppComponent
     err => {
       alert('Desculpe. Tivemos um problema ao carregar os personagens');
       this.loadingChars = false;
-    })
+    });
   }
 
   selectCharacter(e: SelectedCharEvent) {

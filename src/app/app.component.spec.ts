@@ -1,19 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
-// import { MarvelService } from './services/marvel.service';
-// import { of, throwError } from 'rxjs';
-// import { Character } from './types/Character';
-// import { MarvelUtils } from './utils/MarvelUtils';
-// import { HttpClient } from '@angular/common/http';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-// import { Type } from '@angular/core';
+import { of, throwError } from 'rxjs';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { MarvelService } from './services/marvel.service';
+import { characters } from './utils/mocks/marvel-response';
 
 
 describe('AppComponent', () =>
 {
   let appFixture: ComponentFixture<AppComponent>;
   let app: AppComponent;
-  // let mockMarvelService: MarvelService;
+  let marvelService: MarvelService;
   // let mockMarvelUtils: MarvelUtils;
 
   beforeEach(async () => {
@@ -26,6 +23,8 @@ describe('AppComponent', () =>
 
     appFixture = TestBed.createComponent(AppComponent);
     app = appFixture.componentInstance;
+
+    marvelService = TestBed.inject(MarvelService);
   });
 
   it('should create the app', () => {
@@ -36,12 +35,28 @@ describe('AppComponent', () =>
 
   // --- loadCharacters ---
 
-  /*escribe('loadCharacters', () =>
+  describe('loadCharacters', () =>
   {
-    it('teste', () => {
+    it('should load characters with success', () => {
+      const mock = characters.buildResponse([
+        characters.hero1,
+        characters.hero2,
+        characters.noImgHero,
+        characters.gifHero,
+      ]);
 
+      const expected = [
+        characters.hero1,
+        characters.hero2,
+      ];
+
+      spyOn(marvelService, 'getCharacters').and.returnValue(of(mock));
+
+      app.loadCharacters();
+      expect(app.initialCharacters).toEqual(expected);
+      expect(app.loadingChars).toBeFalse();
     });
-  });*/
+  });
 
 
 
